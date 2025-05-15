@@ -1,17 +1,34 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ChevronDown} from 'lucide-react';
 import type {SetPreferencesProps} from "../interfaces/SetPreferencesProps.ts";
 import {NavigationButtonGroup} from "./layouts/NavigationButtonGroup.tsx";
+import {masterDataService} from "../services/MasterDataService.ts";
+import {useAuth} from "../contexts/AuthProvider.tsx";
 
 const SetPreferences: React.FC<SetPreferencesProps> = (
     {userData, updateUserData, prevStep, handleSubmit}) => {
 
-    const topicOptions = [
-        'Career Development', 'Technical Skills', 'Leadership', 'Communication',
-        'Work-Life Balance', 'Industry Insights', 'Networking', 'Entrepreneurship'
-    ];
+    const {authAxios} = useAuth();
+    const [topicOptions, setTopicOptions] = React.useState<string[]>([]);
 
     const learningStyles = ['Visual', 'Auditory', 'Reading/Writing', 'Kinesthetic'];
+
+    useEffect(() => {
+        fetchMasterData();
+    }, []);
+
+    const fetchMasterData = async () => {
+        try {
+            const response = await masterDataService(authAxios);
+            setTopicOptions(response.appSettings.preferences || []);
+        }catch{
+            setTopicOptions([
+                'Career Development', 'Technical Skills', 'Leadership', 'Communication',
+                'Work-Life Balance', 'Industry Insights', 'Networking', 'Entrepreneurship'
+            ]);
+        }
+    }
+
 
     const toggleTopic = (topic: string) => {
         const updatedTopics = userData.interestedTopics.includes(topic)
@@ -26,7 +43,7 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
 
     return (
         <div className="p-8">
-            <div className="mb-8">
+            <div className="mb-8 flex justify-between">
                 <h1 className="text-3xl font-bold text-gray-800">Set Your Preferences</h1>
                 <div className="text-right">
                     <span className="text-orange-500 font-bold">Step 3</span>

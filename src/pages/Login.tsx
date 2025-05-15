@@ -34,7 +34,9 @@ const Login = () => {
         const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/;
 
-        if (!emailRegex.test(formData.email.trim())) {
+        if(!formData.email || formData.email.trim() === '') {
+            newErrors.email = 'Email is required';
+        }else if (!emailRegex.test(formData.email.trim())) {
             newErrors.email = "Please enter a valid email";
         }
 
@@ -44,6 +46,10 @@ const Login = () => {
 
         if(!passwordRegex.test(formData.password)) {
             newErrors.password = 'Password must be at least 8 characters, include a number and a capital letter and a special character';
+        }
+
+        if(!formData.password || formData.password.trim() === '') {
+            newErrors.password = 'Password is required';
         }
 
         if(formData.password.length > 128){
@@ -109,7 +115,7 @@ const Login = () => {
                         onChange={(value) => setFormData({...formData, email: value})}
                         error={errors.email}
                         clearError={() => clearError("email")}
-                        required
+                        placeholder={"Enter your email here"}
                     />
 
                     <InputField
@@ -120,10 +126,10 @@ const Login = () => {
                         onChange={(value) => setFormData({...formData, password: value})}
                         error={errors.password}
                         clearError={() => clearError("password")}
-                        required
                         showToggle
                         showPassword={showPassword}
                         toggleVisibility={togglePasswordVisibility}
+                        placeholder={"Enter your password"}
                     />
 
                     <div className="flex items-center justify-end">
@@ -138,7 +144,7 @@ const Login = () => {
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className={`w-full py-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition duration-200 ${
+                        className={`cursor-pointer w-full py-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition duration-200 ${
                             isSubmitting ? "opacity-70 cursor-not-allowed" : ""
                         }`}
                     >

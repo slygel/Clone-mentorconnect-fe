@@ -41,7 +41,7 @@ export const InputField: React.FC<InputFieldProps> = ({
         id={id}
         className={`w-full p-3 border ${
           error ? "border-red-500" : "border-gray-300"
-        } rounded-lg bg-white text-black text-md focus:outline-none`}
+        } rounded-lg bg-white text-black text-md focus:outline-none hover:border-orange-400`}
         value={value}
         onChange={(e) => {
           onChange(e.target.value);
@@ -57,9 +57,9 @@ export const InputField: React.FC<InputFieldProps> = ({
           className="absolute inset-y-0 right-0 pr-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
         >
           {showPassword ? (
-            <EyeOff className="h-5 w-5" />
+            <EyeOff className="cursor-pointer h-5 w-5" />
           ) : (
-            <Eye className="h-5 w-5" />
+            <Eye className="cursor-pointer h-5 w-5" />
           )}
         </button>
       )}

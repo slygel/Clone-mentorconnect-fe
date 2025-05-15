@@ -42,7 +42,8 @@ export interface UserDataToApi {
         isPrivate: boolean,
         messageAllowed: boolean,
         notiAllowed: boolean,
-        accountStatus: number
+        accountStatus: number,
+        fullName: string
     }
 }
 
@@ -93,7 +94,8 @@ export const convertUserDataToApiFormat = (userData: UserData): UserDataToApi =>
             isPrivate: userData.privateProfile,
             messageAllowed: userData.allowMessages,
             notiAllowed: userData.receiveNotifications,
-            accountStatus: userData.accountStatus
+            accountStatus: userData.accountStatus,
+            fullName: userData.fullName
         }
     };
 };

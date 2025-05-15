@@ -17,7 +17,9 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
         const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/;
 
-        if (!emailRegex.test(userData.email.trim())) {
+        if(!userData.email || userData.email.trim() === '') {
+            newErrors.email = 'Email is required';
+        }else if (!emailRegex.test(userData.email.trim())) {
             newErrors.email = "Please enter a valid email";
         }
 
@@ -29,11 +31,15 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
             newErrors.password = 'Password must be at least 8 characters, include a number and a capital letter and a special character';
         }
 
-        if (userData.password !== userData.confirmPassword) {
+        if(!userData.confirmPassword || userData.confirmPassword.trim() === '') {
+            newErrors.confirmPassword = 'Confirm password is required';
+        }else if (userData.password !== userData.confirmPassword) {
             newErrors.confirmPassword = "Passwords do not match";
         }
 
-        if(userData.password.length > 128){
+        if(!userData.password || userData.password.trim() === '') {
+            newErrors.password = 'Password is required';
+        }else if(userData.password.length > 128){
             newErrors.password = 'The password must not exceed 128 characters.';
         }
 
@@ -108,9 +114,9 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
                     type="email"
                     value={userData.email}
                     onChange={(value) => updateUserData({email: value})}
+                    placeholder={"Enter your email here"}
                     error={errors.email}
                     clearError={() => clearError('email')}
-                    required
                 />
 
                 <InputField
@@ -121,10 +127,10 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
                     onChange={(value) => updateUserData({password: value})}
                     error={errors.password}
                     clearError={() => clearError('password')}
-                    required
                     showToggle
                     showPassword={showPassword}
                     toggleVisibility={togglePasswordVisibility}
+                    placeholder={"Enter your password"}
                 />
 
                 <InputField
@@ -135,10 +141,10 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
                     onChange={(value) => updateUserData({confirmPassword: value})}
                     error={errors.confirmPassword}
                     clearError={() => clearError('confirmPassword')}
-                    required
                     showToggle
                     showPassword={showConfirmPassword}
                     toggleVisibility={toggleConfirmPasswordVisibility}
+                    placeholder={"Enter your password"}
                 />
 
                 <CheckboxField
