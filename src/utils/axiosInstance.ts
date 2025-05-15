@@ -8,7 +8,8 @@ interface FailedRequest {
 let isRefreshing = false;
 const failedRequestsQueue: FailedRequest[] = [];
 
-const API_URL = import.meta.env.VITE_API_URL as string;
+//const API_URL = import.meta.env.VITE_API_URL as string;
+const API_URL = "https://40ee-14-232-74-239.ngrok-free.app";
 
 // Helper function to process the queue of failed requests
 const processQueue = (error: AxiosError | null = null) => {
