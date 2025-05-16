@@ -15,14 +15,14 @@ const initialUserData: UserData = {
     confirmPassword: '',
     agreeToTerms: false,
     fullName: '',
-    bio: '',
-    role: "learner",
+    role: 'learner',
+    bio: '',  // Use empty string instead of null
     areasOfExpertise: [],
-    professionalSkills: '',
-    industryExperience: '',
+    professionalSkills: '',  // Use empty string instead of null
+    industryExperience: '',  // Use empty string instead of null
     availability: [],
-    communicationMethod: null,
-    learningObjectives: '',
+    communicationMethod: 'video',
+    learningObjectives: '',  // Use empty string instead of null
     interestedTopics: [],
     sessionFrequency: 'Weekly',
     sessionDuration: '1 hour',
@@ -30,7 +30,8 @@ const initialUserData: UserData = {
     privateProfile: false,
     allowMessages: true,
     receiveNotifications: true,
-    accountStatus: 0
+    accountStatus: 0,
+    teachingApproaches: []
 };
 
 const Registration = () => {

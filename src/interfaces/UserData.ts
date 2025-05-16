@@ -5,12 +5,12 @@ export interface UserData {
     agreeToTerms: boolean;
     fullName: string;
     role: 'learner' | 'mentor' | null;
-    bio: string;
+    bio: string | null;
     areasOfExpertise: string[];
-    professionalSkills: string;
-    industryExperience: string;
+    professionalSkills: string | null;
+    industryExperience: string | null;
     communicationMethod: 'video' | 'audio' | 'text' | null;
-    learningObjectives: string;
+    learningObjectives: string | null;
     availability: string[];
     interestedTopics: string[];
     sessionFrequency: string;
@@ -20,6 +20,7 @@ export interface UserData {
     allowMessages: boolean;
     receiveNotifications: boolean;
     accountStatus: number;
+    teachingApproaches: string[];
 }
 
 export interface UserDataToApi {
@@ -27,25 +28,27 @@ export interface UserDataToApi {
     password: string;
     role: number;
     userDetailsToAddDTO: {
-        bio: string,
-        imageUrl: string,
-        skills: string,
-        experience: string,
-        prefferedComm: number,
-        learningGoal: string,
-        sessionFreq: number,
-        sessionDur: number,
-        prefferedStyle: number,
-        availability: string,
-        expertise: string,
-        preference: string,
-        isPrivate: boolean,
-        messageAllowed: boolean,
-        notiAllowed: boolean,
-        accountStatus: number,
-        fullName: string
-    }
+        bio: string | null;
+        imageUrl: string;
+        skills: string | null;
+        experience: string | null;
+        prefferedComm: number;
+        learningGoal: string | null;
+        sessionFreq: number;
+        sessionDur: number;
+        prefferedStyle: number;
+        availability: string;
+        expertise: string;
+        preference: string;
+        isPrivate: boolean;
+        messageAllowed: boolean;
+        notiAllowed: boolean;
+        accountStatus: number;
+        fullName: string;
+        teachingApproaches: string;
+    };
 }
+
 
 export const convertUserDataToApiFormat = (userData: UserData): UserDataToApi => {
     // Convert role to number
@@ -79,12 +82,12 @@ export const convertUserDataToApiFormat = (userData: UserData): UserDataToApi =>
         password: userData.password,
         role: roleNumber,
         userDetailsToAddDTO: {
-            bio: userData.bio || '',
+            bio: userData.bio === '' ? null : userData.bio,
             imageUrl: '', // Default empty as it's handled separately
-            skills: userData.professionalSkills || '',
-            experience: userData.industryExperience || '',
+            skills: userData.professionalSkills === '' ? null : userData.professionalSkills,
+            experience: userData.industryExperience === '' ? null : userData.industryExperience,
             prefferedComm: commMethod,
-            learningGoal: userData.learningObjectives || '',
+            learningGoal: userData.learningObjectives === '' ? null : userData.learningObjectives,
             sessionFreq: sessionFreq,
             sessionDur: sessionDur,
             prefferedStyle: prefferedStyle,
@@ -95,7 +98,8 @@ export const convertUserDataToApiFormat = (userData: UserData): UserDataToApi =>
             messageAllowed: userData.allowMessages,
             notiAllowed: userData.receiveNotifications,
             accountStatus: userData.accountStatus,
-            fullName: userData.fullName
+            fullName: userData.fullName,
+            teachingApproaches: userData.teachingApproaches.join(';')
         }
     };
 };

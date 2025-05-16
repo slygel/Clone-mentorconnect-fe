@@ -33,7 +33,7 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
 
     useEffect(() => {
         if (!userData.role) {
-            updateUserData({ role: 'learner', accountStatus: 1 });
+            updateUserData({ role: 'learner', accountStatus: 1, communicationMethod: 'video' });
         }
         fetchMasterData();
     }, []);
@@ -136,12 +136,15 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
                     </div>
 
                     <div ref={refs.fullName} className="flex-1">
+                        <label className="block mb-2">
+                            Full Name <span className="text-red-500">*</span>
+                        </label>
                         <InputField
-                            label="Full Name"
+                            label=""
                             id="fullName"
                             type="text"
                             value={userData.fullName}
-                            onChange={(value) => updateUserData({ fullName: value })}
+                            onChange={(value) => updateUserData({fullName: value})}
                             error={errors.fullName}
                             clearError={() => clearError('fullName')}
                             placeholder={"Enter your full name"}
@@ -188,13 +191,14 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
                     <TextareaField
                         label="Bio"
                         id="bio"
-                        value={userData.bio}
+                        value={userData.bio || ''}  // Convert null to empty string
                         onChange={(value) => updateUserData({ bio: value })}
                         placeholder="Write a short bio about yourself..."
                         error={errors.bio}
                         clearError={() => clearError('bio')}
                         rows={4}
                     />
+
                 </div>
 
                 {/* Areas of expertise - only show for mentors */}
@@ -217,12 +221,13 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
                                 label="Professional skills"
                                 id="professionalSkills"
                                 type="text"
-                                value={userData.professionalSkills}
+                                value={userData.professionalSkills || ''}  // Convert null to empty string
                                 onChange={(value) => updateUserData({ professionalSkills: value })}
                                 clearError={() => clearError('professionalSkills')}
-                                placeholder={"e.g. JavaScript, Project Management"}
+                                placeholder="e.g. JavaScript, Project Management"
                                 error={errors.professionalSkills}
                             />
+
                         </div>
 
                         <div ref={refs.industryExperience}>
@@ -230,12 +235,13 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
                                 label="Industry experience"
                                 id="industryExperience"
                                 type="text"
-                                value={userData.industryExperience}
+                                value={userData.industryExperience || ''}  // Convert null to empty string
                                 onChange={(value) => updateUserData({ industryExperience: value })}
                                 clearError={() => clearError('industryExperience')}
-                                placeholder={"e.g. 5 years in Tech, 3 years in Finance"}
+                                placeholder="e.g. 5 years in Tech, 3 years in Finance"
                                 error={errors.industryExperience}
                             />
+
                         </div>
                     </div>
                 )}
@@ -302,13 +308,14 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
                         <TextareaField
                             label="What do you hope to learn?"
                             id="learningObjectives"
-                            value={userData.learningObjectives}
+                            value={userData.learningObjectives || ''}  // Convert null to empty string
                             onChange={(value) => updateUserData({ learningObjectives: value })}
                             placeholder="Describe your learning objectives and what you hope to achieve..."
                             rows={4}
                             error={errors.learningObjectives}
                             clearError={() => clearError('learningObjectives')}
                         />
+
                     </div>
                 )}
 

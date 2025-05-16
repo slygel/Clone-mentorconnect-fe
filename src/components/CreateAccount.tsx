@@ -3,6 +3,8 @@ import type {CreateAccountProps} from "../interfaces/CreateAccountProps.ts";
 import {InputField} from "./layouts/InputField.tsx";
 import {CheckboxField} from "./layouts/CheckboxField.tsx";
 import {Link} from "react-router-dom";
+import {getEmailExisted} from "../services/AuthService.ts";
+import {useAuth} from "../contexts/AuthProvider.tsx";
 
 const CreateAccount: React.FC<CreateAccountProps> = ({userData,
                                                      updateUserData,
@@ -11,19 +13,30 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const {authAxios} = useAuth();
 
-    const validate = () => {
+    const validate = async () => {
         const newErrors: Record<string, string> = {};
         const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/;
 
         if(!userData.email || userData.email.trim() === '') {
-            newErrors.email = 'Email is required';
+            newErrors.email = 'Please enter in your email';
         }else if (!emailRegex.test(userData.email.trim())) {
             newErrors.email = "Please enter a valid email";
+        }else{
+            try {
+                const emailExists = await getEmailExisted(authAxios, userData.email.trim());
+                if (emailExists) {
+                    newErrors.email = "This email is already registered";
+                }
+            } catch (error) {
+                console.error("Error checking email existence:", error);
+                newErrors.email = "An error occurred while checking the email. Please try again";
+            }
         }
 
-        if(userData.email.length > 255){
+        if(userData.email.length > 254){
             newErrors.email = 'The length of Email address should be 254 characters';
         }
 
@@ -32,15 +45,15 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
         }
 
         if(!userData.confirmPassword || userData.confirmPassword.trim() === '') {
-            newErrors.confirmPassword = 'Confirm password is required';
+            newErrors.confirmPassword = 'Please confirm your password';
         }else if (userData.password !== userData.confirmPassword) {
             newErrors.confirmPassword = "Passwords do not match";
         }
 
         if(!userData.password || userData.password.trim() === '') {
-            newErrors.password = 'Password is required';
+            newErrors.password = 'Please enter in your password';
         }else if(userData.password.length > 128){
-            newErrors.password = 'The password must not exceed 128 characters.';
+            newErrors.password = 'The password must not exceed 128 characters';
         }
 
         if (!userData.agreeToTerms) {
@@ -51,9 +64,10 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (validate()) {
+        const isValid = await validate();
+        if (isValid) {
             // Initialize user data fields that will be needed later
             const initialUserData = {
                 role: null,
@@ -111,7 +125,7 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
                 <InputField
                     label="Email Address"
                     id="email"
-                    type="email"
+                    type="text"
                     value={userData.email}
                     onChange={(value) => updateUserData({email: value})}
                     placeholder={"Enter your email here"}

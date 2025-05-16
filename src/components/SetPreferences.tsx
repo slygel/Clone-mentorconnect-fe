@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {ChevronDown} from 'lucide-react';
+import {BarChart3, ChevronDown, FileText, MessageSquare, Wrench} from 'lucide-react';
 import type {SetPreferencesProps} from "../interfaces/SetPreferencesProps.ts";
 import {NavigationButtonGroup} from "./layouts/NavigationButtonGroup.tsx";
 import {masterDataService} from "../services/MasterDataService.ts";
@@ -29,16 +29,24 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
         }
     }
 
-
     const toggleTopic = (topic: string) => {
-        const updatedTopics = userData.interestedTopics.includes(topic)
-            ? userData.interestedTopics.filter(t => t !== topic)
-            : [...userData.interestedTopics, topic];
+        const updatedTopics = (userData.interestedTopics || []).includes(topic)
+            ? userData.interestedTopics?.filter(t => t !== topic)
+            : [...(userData.interestedTopics || []), topic];
 
-        updateUserData({interestedTopics: updatedTopics});
+        updateUserData({ interestedTopics: updatedTopics });
     };
 
-    // const isMentor = userData.role === 'mentor';
+
+    const toggleTeachingApproach = (approach: string) => {
+        const updatedApproaches = userData.teachingApproaches?.includes(approach)
+            ? userData.teachingApproaches.filter((a) => a !== approach)
+            : [...(userData.teachingApproaches || []), approach]
+
+        updateUserData({ teachingApproaches: updatedApproaches })
+    }
+
+    const isMentor = userData.role === 'mentor';
     const isLearner = userData.role === 'learner';
 
     return (
@@ -65,7 +73,7 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
                                     key={topic}
                                     type="button"
                                     className={`p-3 rounded-lg border ${
-                                        userData.interestedTopics.includes(topic)
+                                        userData.interestedTopics?.includes(topic)
                                             ? 'bg-orange-100 border-orange-500 text-orange-700'
                                             : 'bg-white border-gray-300 text-gray-700 hover:border-orange-300'
                                     }`}
@@ -140,6 +148,66 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
                                     {style}
                                 </button>
                             ))}
+                        </div>
+                    </div>
+                )}
+
+                {isMentor && (
+                    <div className="mb-8">
+                        <label className="block text-gray-700 mb-2">Your teaching approach (select all that
+                            apply)</label>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <button
+                                type="button"
+                                className={`p-4 rounded-lg border-2 flex items-center gap-3 ${
+                                    userData.teachingApproaches?.includes("hands-on")
+                                        ? "bg-orange-100 border-orange-500 text-orange-700"
+                                        : "bg-white border-gray-300 text-gray-700 hover:border-orange-300"
+                                }`}
+                                onClick={() => toggleTeachingApproach("hands-on")}
+                            >
+                                <Wrench className="h-5 w-5"/>
+                                <span>Hands-on Practice</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                className={`p-4 rounded-lg border-2 flex items-center gap-3 ${
+                                    userData.teachingApproaches?.includes("discussion")
+                                        ? "bg-orange-100 border-orange-500 text-orange-700"
+                                        : "bg-white border-gray-300 text-gray-700 hover:border-orange-300"
+                                }`}
+                                onClick={() => toggleTeachingApproach("discussion")}
+                            >
+                                <MessageSquare className="h-5 w-5"/>
+                                <span>Discussion Based</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                className={`p-4 rounded-lg border-2 flex items-center gap-3 ${
+                                    userData.teachingApproaches?.includes("project")
+                                        ? "bg-orange-100 border-orange-500 text-orange-700"
+                                        : "bg-white border-gray-300 text-gray-700 hover:border-orange-300"
+                                }`}
+                                onClick={() => toggleTeachingApproach("project")}
+                            >
+                                <BarChart3 className="h-5 w-5"/>
+                                <span>Project Based</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                className={`p-4 rounded-lg border-2 flex items-center gap-3 ${
+                                    userData.teachingApproaches?.includes("lecture")
+                                        ? "bg-orange-100 border-orange-500 text-orange-700"
+                                        : "bg-white border-gray-300 text-gray-700 hover:border-orange-300"
+                                }`}
+                                onClick={() => toggleTeachingApproach("lecture")}
+                            >
+                                <FileText className="h-5 w-5"/>
+                                <span>Lecture Style</span>
+                            </button>
                         </div>
                     </div>
                 )}

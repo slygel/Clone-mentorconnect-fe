@@ -16,6 +16,11 @@ export const register = async (authAxios: AxiosInstance, data: UserDataToApi) =>
     return response.data;
 }
 
+export const getEmailExisted = async (authAxios: AxiosInstance, email: string) => {
+    const response = await authAxios.get("/Auth/CheckExistingEmail?email=" + email);
+    return response.data;
+}
+
 export const uploadProfileImage = async (authAxios: AxiosInstance, file: File) => {
     try {
         const formData = new FormData();

@@ -110,7 +110,7 @@ const Login = () => {
                     <InputField
                         label="Email Address"
                         id="email"
-                        type="email"
+                        type="text"
                         value={formData.email}
                         onChange={(value) => setFormData({...formData, email: value})}
                         error={errors.email}
