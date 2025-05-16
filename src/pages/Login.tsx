@@ -40,7 +40,7 @@ const Login = () => {
             newErrors.email = "Please enter a valid email";
         }
 
-        if(formData.email.length > 255){
+        if(formData.email.length > 254){
             newErrors.email = 'The length of Email address should be 254 characters';
         }
 
