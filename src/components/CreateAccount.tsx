@@ -68,27 +68,7 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
         e.preventDefault();
         const isValid = await validate();
         if (isValid) {
-            // Initialize user data fields that will be needed later
-            const initialUserData = {
-                role: null,
-                fullName: '',
-                bio: '',
-                areasOfExpertise: [],
-                professionalSkills: '',
-                industryExperience: '',
-                communicationMethod: null,
-                learningObjectives: '',
-                availability: [],
-                interestedTopics: [],
-                sessionFrequency: 'Weekly',
-                sessionDuration: '30 minutes',
-                learningStyle: 'visual',
-                privateProfile: false,
-                allowMessages: true,
-                receiveNotifications: true
-            };
-
-            updateUserData(initialUserData);
+            updateUserData(userData);
             nextStep();
         }
     };
@@ -123,7 +103,7 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 <InputField
-                    label="Email Address"
+                    label="Email address"
                     id="email"
                     type="text"
                     value={userData.email}

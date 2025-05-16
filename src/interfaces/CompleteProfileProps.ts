@@ -5,4 +5,6 @@ export interface CompleteProfileProps {
     updateUserData: (data: Partial<UserData>) => void;
     nextStep: () => void;
     prevStep: () => void;
+    availabilityOptions: string[];
+    expertiseOptions: string[];
 }

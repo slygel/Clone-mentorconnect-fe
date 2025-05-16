@@ -1,33 +1,12 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {BarChart3, ChevronDown, FileText, MessageSquare, Wrench} from 'lucide-react';
 import type {SetPreferencesProps} from "../interfaces/SetPreferencesProps.ts";
 import {NavigationButtonGroup} from "./layouts/NavigationButtonGroup.tsx";
-import {masterDataService} from "../services/MasterDataService.ts";
-import {useAuth} from "../contexts/AuthProvider.tsx";
 
 const SetPreferences: React.FC<SetPreferencesProps> = (
-    {userData, updateUserData, prevStep, handleSubmit}) => {
-
-    const {authAxios} = useAuth();
-    const [topicOptions, setTopicOptions] = React.useState<string[]>([]);
+    {userData, updateUserData, prevStep, handleSubmit, topicOptions}) => {
 
     const learningStyles = ['Visual', 'Auditory', 'Reading/Writing', 'Kinesthetic'];
-
-    useEffect(() => {
-        fetchMasterData();
-    }, []);
-
-    const fetchMasterData = async () => {
-        try {
-            const response = await masterDataService(authAxios);
-            setTopicOptions(response.appSettings.preferences || []);
-        }catch{
-            setTopicOptions([
-                'Career Development', 'Technical Skills', 'Leadership', 'Communication',
-                'Work-Life Balance', 'Industry Insights', 'Networking', 'Entrepreneurship'
-            ]);
-        }
-    }
 
     const toggleTopic = (topic: string) => {
         const updatedTopics = (userData.interestedTopics || []).includes(topic)
@@ -36,7 +15,6 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
 
         updateUserData({ interestedTopics: updatedTopics });
     };
-
 
     const toggleTeachingApproach = (approach: string) => {
         const updatedApproaches = userData.teachingApproaches?.includes(approach)

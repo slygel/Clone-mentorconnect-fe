@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import CompleteProfile from "../components/CompleteProfile.tsx";
 import SetPreferences from "../components/SetPreferences.tsx";
 import {convertUserDataToApiFormat, type UserData} from "../interfaces/UserData.ts";
@@ -8,6 +8,7 @@ import {register} from "../services/AuthService.ts";
 import {useAuth} from "../contexts/AuthProvider.tsx";
 import {toast} from "react-toastify";
 import axios from "axios";
+import {masterDataService} from "../services/MasterDataService.ts";
 
 const initialUserData: UserData = {
     email: '',
@@ -30,22 +31,49 @@ const initialUserData: UserData = {
     privateProfile: false,
     allowMessages: true,
     receiveNotifications: true,
-    accountStatus: 0,
+    accountStatus: 1 , // 1 for active for learner
     teachingApproaches: []
 };
 
 const Registration = () => {
     const [currentStep, setCurrentStep] = useState<number>(1);
     const [userData, setUserData] = useState<UserData>(initialUserData);
+
+    const [availabilityOptions, setAvailabilityOptions] = useState<string[]>([]);
+    const [expertiseOptions, setExpertiseOptions] = useState<string[]>([]);
+    const [topicOptions, setTopicOptions] = useState<string[]>([]);
+
     const navigate = useNavigate();
     const { authAxios } = useAuth();
 
+    useEffect(() => {
+        fetchMasterData();
+    }, [authAxios]);
+
+    const fetchMasterData = async () => {
+        try {
+            const response = await masterDataService(authAxios);
+            setAvailabilityOptions(response.appSettings.availabilities || []);
+            setExpertiseOptions(response.appSettings.expertises || []);
+            setTopicOptions(response.appSettings.preferences || []);
+        } catch {
+            setAvailabilityOptions(['Weekdays', 'Weekends', 'Mornings', 'Afternoons', 'Evenings']);
+            setExpertiseOptions([
+                'Leadership', 'Programming', 'Design', 'Marketing',
+                'Data Science', 'Business', 'Project Management', 'Communication'
+            ]);
+            setTopicOptions([
+                'Career Development', 'Technical Skills', 'Leadership', 'Communication',
+                'Work-Life Balance', 'Industry Insights', 'Networking', 'Entrepreneurship'
+            ]);
+        }
+    };
     const updateUserData = (data: Partial<UserData>) => {
         setUserData(prev => ({...prev, ...data}));
     };
 
     const nextStep = () => {
-        setCurrentStep(prev => Math.min(prev + 1, 4));
+        setCurrentStep(prev => Math.min(prev + 1, 3));
     };
 
     const prevStep = () => {
@@ -65,7 +93,7 @@ const Registration = () => {
             // Handle profile image upload if needed
             // This would go here
 
-            // Show success message and redirect
+            // Show success message and redirect and remove state
             toast.success('Registration completed successfully!');
             navigate('/login');
         } catch (err) {
@@ -106,6 +134,8 @@ const Registration = () => {
                         updateUserData={updateUserData}
                         nextStep={nextStep}
                         prevStep={prevStep}
+                        availabilityOptions={availabilityOptions}
+                        expertiseOptions={expertiseOptions}
                     />
                 )}
                 {currentStep === 3 && (
@@ -114,6 +144,7 @@ const Registration = () => {
                         updateUserData={updateUserData}
                         prevStep={prevStep}
                         handleSubmit={handleSubmit}
+                        topicOptions={topicOptions}
                     />
                 )}
             </div>

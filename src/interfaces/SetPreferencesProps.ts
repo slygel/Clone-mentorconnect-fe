@@ -5,4 +5,5 @@ export interface SetPreferencesProps {
     updateUserData: (data: Partial<UserData>) => void;
     prevStep: () => void;
     handleSubmit: () => void;
+    topicOptions: string[];
 }

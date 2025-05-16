@@ -6,17 +6,12 @@ import { TextareaField } from "./layouts/TextareaField.tsx";
 import { MultiSelectButtonGroup } from "./layouts/MultiSelectButtonGroup.tsx";
 import { NavigationButtonGroup } from "./layouts/NavigationButtonGroup.tsx";
 import { validateProfile } from "../utils/validateProfile.ts";
-import {masterDataService} from "../services/MasterDataService.ts";
-import {useAuth} from "../contexts/AuthProvider.tsx";
 
 const CompleteProfile: React.FC<CompleteProfileProps> = (
-    { userData, updateUserData, nextStep, prevStep }) => {
+    { userData, updateUserData, nextStep, prevStep, availabilityOptions,
+        expertiseOptions }) => {
 
     const [errors, setErrors] = useState<Record<string, string>>({});
-    const {authAxios} = useAuth();
-
-    const [availabilityOptions, setAvailabilityOptions] = useState<string[]>([]);
-    const [expertiseOptions, setExpertiseOptions] = useState<string[]>([]);
 
     // Create refs for fields to scroll to on error
     const refs = {
@@ -35,22 +30,7 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
         if (!userData.role) {
             updateUserData({ role: 'learner', accountStatus: 1, communicationMethod: 'video' });
         }
-        fetchMasterData();
     }, []);
-
-    const fetchMasterData = async () => {
-        try {
-            const response = await masterDataService(authAxios);
-            setAvailabilityOptions(response.appSettings.availabilities || []);
-            setExpertiseOptions(response.appSettings.expertises || []);
-        }catch{
-            setAvailabilityOptions(['Weekdays', 'Weekends', 'Mornings', 'Afternoons', 'Evenings']);
-            setExpertiseOptions([
-                'Leadership', 'Programming', 'Design', 'Marketing',
-                'Data Science', 'Business', 'Project Management', 'Communication'
-            ]);
-        }
-    }
 
     const toggleAvailability = (time: string) => {
         const updatedTimes = userData.availability.includes(time)

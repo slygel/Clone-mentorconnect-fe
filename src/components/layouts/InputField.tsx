@@ -39,7 +39,7 @@ export const InputField: React.FC<InputFieldProps> = ({
       <input
         type={showToggle && showPassword ? "text" : type}
         id={id}
-        className={`w-full p-3 border ${
+        className={`pr-9 pl-3 w-full p-3 border ${
           error ? "border-red-500" : "border-gray-300"
         } rounded-lg bg-white text-black text-md focus:outline-none hover:border-orange-400`}
         value={value}
