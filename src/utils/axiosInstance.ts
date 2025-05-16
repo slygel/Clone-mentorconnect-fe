@@ -8,8 +8,6 @@ interface FailedRequest {
 let isRefreshing = false;
 const failedRequestsQueue: FailedRequest[] = [];
 
-const API_URL = import.meta.env.VITE_API_URL as string;
-
 // Helper function to process the queue of failed requests
 const processQueue = (error: AxiosError | null = null) => {
     failedRequestsQueue.forEach(request => {
@@ -29,7 +27,6 @@ const axiosInstance = (
     displayToast: (message: string) => void
 ): AxiosInstance => {
     const authAxios = axios.create({
-        //baseURL: API_URL,
         baseURL: "https://40ee-14-232-74-239.ngrok-free.app",
         withCredentials: true,
     });
