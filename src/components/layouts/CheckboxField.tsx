@@ -11,7 +11,7 @@ export const CheckboxField: React.FC<CheckboxFieldProps> = ({ label, value, onCh
         <label className="flex items-start">
             <input
                 type="checkbox"
-                className="mt-1 h-5 w-5 text-orange-500 rounded"
+                className="mt-1 h-5 w-5 text-[#1D63ED] rounded"
                 checked={value}
                 onChange={(e) => {
                     onChange(e.target.checked);

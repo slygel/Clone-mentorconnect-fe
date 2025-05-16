@@ -20,7 +20,7 @@ export const TextareaField: React.FC<TextareaFieldProps> = ({
         <textarea
             id={id}
             rows={rows}
-            className={`w-full p-3 border ${error ? 'border-red-500' : 'border-gray-300'} rounded-lg bg-white text-gray-800 focus:outline-none hover:border-orange-400`}
+            className={`w-full p-3 border ${error ? 'border-red-500' : 'border-gray-300'} rounded-lg bg-white text-gray-800 focus:outline-none hover:border-[#1D63ED]`}
             placeholder={placeholder}
             value={value}
             onChange={(e) => {

@@ -135,7 +135,7 @@ const Login = () => {
                     <div className="flex items-center justify-end">
                         <Link
                             to="/forgot-password"
-                            className="text-orange-500 hover:underline text-sm"
+                            className="text-[#1D63ED] hover:underline text-sm"
                         >
                             Forgot password?
                         </Link>
@@ -144,7 +144,7 @@ const Login = () => {
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className={`cursor-pointer w-full py-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition duration-200 ${
+                        className={`cursor-pointer w-full py-4 bg-[#1D63ED] hover:bg-[#1952C6] text-white font-semibold rounded-lg transition duration-200 ${
                             isSubmitting ? "opacity-70 cursor-not-allowed" : ""
                         }`}
                     >
@@ -155,7 +155,7 @@ const Login = () => {
                 <div className="mt-6 text-center">
                     <p className="text-gray-700">
                         Don't have an account?{" "}
-                        <Link to="/register" className="text-orange-500 hover:underline">
+                        <Link to="/register" className="text-[#1D63ED] hover:underline">
                             Sign up
                         </Link>
                     </p>

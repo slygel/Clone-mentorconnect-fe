@@ -41,7 +41,7 @@ export const InputField: React.FC<InputFieldProps> = ({
         id={id}
         className={`pr-9 pl-3 w-full p-3 border ${
           error ? "border-red-500" : "border-gray-300"
-        } rounded-lg bg-white text-black text-md focus:outline-none hover:border-orange-400`}
+        } rounded-lg bg-white text-black text-md focus:outline-none hover:border-[#1D63ED]`}
         value={value}
         onChange={(e) => {
           onChange(e.target.value);

@@ -32,7 +32,7 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
             <div className="mb-8 flex justify-between">
                 <h1 className="text-3xl font-bold text-gray-800">Set Your Preferences</h1>
                 <div className="text-right">
-                    <span className="text-orange-500 font-bold">Step 3</span>
+                    <span className="text-[#1D63ED] font-bold">Step 3</span>
                     <span className="text-gray-600"> of 3</span>
                 </div>
             </div>
@@ -52,8 +52,8 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
                                     type="button"
                                     className={`p-3 rounded-lg border ${
                                         userData.interestedTopics?.includes(topic)
-                                            ? 'bg-orange-100 border-orange-500 text-orange-700'
-                                            : 'bg-white border-gray-300 text-gray-700 hover:border-orange-300'
+                                            ? 'bg-[#E5F2FC] border-[#1D63ED] text-[#1D63ED]'
+                                            : 'bg-white border-gray-300 text-gray-700 hover:border-[#1D63ED]'
                                     }`}
                                     onClick={() => toggleTopic(topic)}
                                 >
@@ -118,7 +118,7 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
                                     type="button"
                                     className={`p-3 rounded-lg ${
                                         userData.learningStyle === style.toLowerCase()
-                                            ? 'bg-orange-500 text-white'
+                                            ? 'bg-[#1D63ED] text-white'
                                             : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                     }`}
                                     onClick={() => updateUserData({learningStyle: style.toLowerCase()})}
@@ -139,8 +139,8 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
                                 type="button"
                                 className={`p-4 rounded-lg border-2 flex items-center gap-3 ${
                                     userData.teachingApproaches?.includes("hands-on")
-                                        ? "bg-orange-100 border-orange-500 text-orange-700"
-                                        : "bg-white border-gray-300 text-gray-700 hover:border-orange-300"
+                                        ? "bg-[#E5F2FC] border-[#1D63ED] text-[#1D63ED]"
+                                        : "bg-white border-gray-300 text-gray-700 hover:border-[#1D63ED]"
                                 }`}
                                 onClick={() => toggleTeachingApproach("hands-on")}
                             >
@@ -152,8 +152,8 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
                                 type="button"
                                 className={`p-4 rounded-lg border-2 flex items-center gap-3 ${
                                     userData.teachingApproaches?.includes("discussion")
-                                        ? "bg-orange-100 border-orange-500 text-orange-700"
-                                        : "bg-white border-gray-300 text-gray-700 hover:border-orange-300"
+                                        ? "bg-[#E5F2FC] border-[#1D63ED] text-[#1D63ED]"
+                                        : "bg-white border-gray-300 text-gray-700 hover:border-[#1D63ED]"
                                 }`}
                                 onClick={() => toggleTeachingApproach("discussion")}
                             >
@@ -165,8 +165,8 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
                                 type="button"
                                 className={`p-4 rounded-lg border-2 flex items-center gap-3 ${
                                     userData.teachingApproaches?.includes("project")
-                                        ? "bg-orange-100 border-orange-500 text-orange-700"
-                                        : "bg-white border-gray-300 text-gray-700 hover:border-orange-300"
+                                        ? "bg-[#E5F2FC] border-[#1D63ED] text-[#1D63ED]"
+                                        : "bg-white border-gray-300 text-gray-700 hover:border-[#1D63ED]"
                                 }`}
                                 onClick={() => toggleTeachingApproach("project")}
                             >
@@ -178,8 +178,8 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
                                 type="button"
                                 className={`p-4 rounded-lg border-2 flex items-center gap-3 ${
                                     userData.teachingApproaches?.includes("lecture")
-                                        ? "bg-orange-100 border-orange-500 text-orange-700"
-                                        : "bg-white border-gray-300 text-gray-700 hover:border-orange-300"
+                                        ? "bg-[#E5F2FC] border-[#1D63ED] text-[#1D63ED]"
+                                        : "bg-white border-gray-300 text-gray-700 hover:border-[#1D63ED]"
                                 }`}
                                 onClick={() => toggleTeachingApproach("lecture")}
                             >
@@ -197,7 +197,7 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
                         <label className="flex items-start">
                             <input
                                 type="checkbox"
-                                className="mt-1 h-5 w-5 text-orange-500 rounded"
+                                className="mt-1 h-5 w-5 text-[#1D63ED] rounded"
                                 checked={userData.privateProfile}
                                 onChange={(e) => updateUserData({privateProfile: e.target.checked})}
                             />
@@ -212,7 +212,7 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
                         <label className="flex items-start">
                             <input
                                 type="checkbox"
-                                className="mt-1 h-5 w-5 text-orange-500 rounded"
+                                className="mt-1 h-5 w-5 text-[#1D63ED] rounded"
                                 checked={userData.allowMessages}
                                 onChange={(e) => updateUserData({allowMessages: e.target.checked})}
                             />
@@ -227,7 +227,7 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
                         <label className="flex items-start">
                             <input
                                 type="checkbox"
-                                className="mt-1 h-5 w-5 text-orange-500 rounded"
+                                className="mt-1 h-5 w-5 text-[#1D63ED] rounded"
                                 checked={userData.receiveNotifications}
                                 onChange={(e) => updateUserData({receiveNotifications: e.target.checked})}
                             />
@@ -243,7 +243,6 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
 
                 <NavigationButtonGroup
                     onBack={prevStep}
-                    // onSubmit={handleSubmit}
                     submitLabel="Complete Registration"
                 />
             </form>

@@ -28,8 +28,8 @@ export const MultiSelectButtonGroup: React.FC<MultiSelectButtonGroupProps> = ({
                     type="button"
                     className={`p-3 rounded-lg border ${
                         selected.includes(option)
-                            ? 'bg-orange-100 border-orange-500 text-orange-700'
-                            : 'bg-white border-gray-300 text-gray-700 hover:border-orange-300'
+                            ? 'bg-[#E5F2FC] border-[#1D63ED] text-[#1D63ED]'
+                            : 'bg-white border-gray-300 text-gray-700 hover:border-[#1D63ED]'
                     } ${gridCols.includes('flex') ? 'px-6 py-3 text-sm' : ''}`}
                     onClick={() => onToggle(option)}
                 >

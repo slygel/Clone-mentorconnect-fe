@@ -96,7 +96,7 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
                     Create Your Account
                 </h1>
                 <div className="text-right">
-                    <span className="text-orange-500 font-bold">Step 1</span>
+                    <span className="text-[#1D63ED] font-bold">Step 1</span>
                     <span className="text-gray-600"> of 3</span>
                 </div>
             </div>
@@ -145,11 +145,11 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
                     label={
                         <>
                             I agree to the{" "}
-                            <a href="#" className="text-orange-500 hover:underline">
+                            <a href="#" className="text-[#1D63ED] hover:underline">
                                 Terms of Service
                             </a>{" "}
                             and
-                            <a href="#" className="text-orange-500 hover:underline">
+                            <a href="#" className="text-[#1D63ED] hover:underline">
                                 {" "}
                                 Privacy Policy
                             </a>
@@ -163,7 +163,7 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
 
                 <button
                     type="submit"
-                    className={`w-full py-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition duration-200 ${
+                    className={`w-full py-4 bg-[#1D63ED] hover:bg-[#1952C6] text-white font-semibold rounded-lg transition duration-200 ${
                         userData.agreeToTerms
                             ? "cursor-pointer"
                             : "cursor-not-allowed opacity-50"
@@ -177,7 +177,7 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
             <div className="mt-6 text-center">
                 <p className="text-gray-700">
                     Already have an account?{" "}
-                    <Link to="/login" className="text-orange-500 hover:underline">
+                    <Link to="/login" className="text-[#1D63ED] hover:underline">
                         Sign in
                     </Link>
                 </p>

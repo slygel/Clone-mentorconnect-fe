@@ -90,7 +90,7 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
             <div className="flex justify-between items-center mb-8">
                 <h1 className="text-2xl font-bold text-gray-800">Complete Your Profile</h1>
                 <div className="text-right">
-                    <span className="text-orange-500 font-bold">Step 2</span>
+                    <span className="text-[#1D63ED] font-bold">Step 2</span>
                     <span className="text-gray-600"> of 3</span>
                 </div>
             </div>
@@ -104,7 +104,7 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
                                 <User className="w-10 h-10 text-gray-400" />
                             </div>
                             <label
-                                className="absolute -bottom-0 -right-0 bg-orange-500 hover:bg-orange-600 text-white p-1 rounded-full cursor-pointer">
+                                className="absolute -bottom-0 -right-0 bg-[#1D63ED] hover:bg-[#1952C6] text-white p-1 rounded-full cursor-pointer">
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
@@ -140,8 +140,8 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
                             type="button"
                             className={`p-6 rounded-lg border-2 flex flex-col items-center ${
                                 userData.role === 'learner'
-                                    ? 'bg-orange-200 border-orange-500'
-                                    : 'bg-white border-gray-300 hover:border-orange-300'
+                                    ? 'bg-[#E5F2FC] border-[#1D63ED]'
+                                    : 'bg-white border-gray-300 hover:border-[#1D63ED]'
                             }`}
                             onClick={() => updateUserData({ role: 'learner', accountStatus: 1 })}
                         >
@@ -154,8 +154,8 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
                             type="button"
                             className={`p-6 rounded-lg border-2 flex flex-col items-center ${
                                 userData.role === 'mentor'
-                                    ? 'bg-orange-200 border-orange-500'
-                                    : 'bg-white border-gray-300 hover:border-orange-300'
+                                    ? 'bg-[#E5F2FC] border-[#1D63ED]'
+                                    : 'bg-white border-gray-300 hover:border-[#1D63ED]'
                             }`}
                             onClick={() => updateUserData({ role: 'mentor', accountStatus: 0 })}
                         >
@@ -245,8 +245,8 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
                             type="button"
                             className={`p-4 rounded-lg border-2 flex items-center justify-center gap-2 ${
                                 userData.communicationMethod === 'video'
-                                    ? 'bg-orange-200 border-orange-500 text-orange-700'
-                                    : 'bg-white border-gray-300 text-gray-700 hover:border-orange-300'
+                                    ? 'bg-[#E5F2FC] border-[#1D63ED]'
+                                    : 'bg-white border-gray-300 hover:border-[#1D63ED]'
                             }`}
                             onClick={() => updateUserData({ communicationMethod: 'video' })}
                         >
@@ -258,8 +258,8 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
                             type="button"
                             className={`p-4 rounded-lg border-2 flex items-center justify-center gap-2 ${
                                 userData.communicationMethod === 'audio'
-                                    ? 'bg-orange-100 border-orange-500 text-orange-700'
-                                    : 'bg-white border-gray-300 text-gray-700 hover:border-orange-300'
+                                    ? 'bg-[#E5F2FC] border-[#1D63ED]'
+                                    : 'bg-white border-gray-300 hover:border-[#1D63ED]'
                             }`}
                             onClick={() => updateUserData({ communicationMethod: 'audio' })}
                         >
@@ -271,8 +271,8 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
                             type="button"
                             className={`p-4 rounded-lg border-2 flex items-center justify-center gap-2 ${
                                 userData.communicationMethod === 'text'
-                                    ? 'bg-orange-100 border-orange-500 text-orange-700'
-                                    : 'bg-white border-gray-300 text-gray-700 hover:border-orange-300'
+                                    ? 'bg-[#E5F2FC] border-[#1D63ED]'
+                                    : 'bg-white border-gray-300 hover:border-[#1D63ED]'
                             }`}
                             onClick={() => updateUserData({ communicationMethod: 'text' })}
                         >
