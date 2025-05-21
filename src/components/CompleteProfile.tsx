@@ -12,6 +12,7 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
         expertiseOptions }) => {
 
     const [errors, setErrors] = useState<Record<string, string>>({});
+    const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
 
     // Create refs for fields to scroll to on error
     const refs = {
@@ -82,6 +83,43 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
         nextStep();
     };
 
+    const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (files && files.length > 0) {
+            const file = files[0];
+
+            // Check file size (1MB limit, matching the backend limit)
+            const maxSize = 1024 * 1024; // 1MB
+            if (file.size > maxSize) {
+                setErrors(prev => ({
+                    ...prev,
+                    avatar: `Image size exceeds maximum limit of 1MB.`
+                }));
+                return;
+            }
+
+            // Check file type
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            if (!allowedTypes.includes(file.type)) {
+                setErrors(prev => ({
+                    ...prev,
+                    avatar: 'Only JPEG, PNG, and GIF images are allowed.'
+                }));
+                return;
+            }
+
+            // Clear any previous error
+            clearError('avatar');
+
+            // Create and set preview URL
+            const previewURL = URL.createObjectURL(file);
+            setAvatarPreview(previewURL);
+
+            // Update userData with the file
+            updateUserData({ avatarFile: file });
+        }
+    };
+
     const isMentor = userData.role === 'mentor';
     const isLearner = userData.role === 'learner';
 
@@ -90,7 +128,7 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
             <div className="flex justify-between items-center mb-8">
                 <h1 className="text-2xl font-bold text-gray-800">Complete Your Profile</h1>
                 <div className="text-right">
-                    <span className="text-[#1D63ED] font-bold">Step 2</span>
+                    <span className="text-[#1B4D3E] font-bold">Step 2</span>
                     <span className="text-gray-600"> of 3</span>
                 </div>
             </div>
@@ -101,18 +139,34 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
                         <div className="relative">
                             <div
                                 className="w-25 h-25 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
-                                <User className="w-10 h-10 text-gray-400" />
+                                {avatarPreview ? (
+                                    <img
+                                        src={avatarPreview}
+                                        alt="Avatar Preview"
+                                        className="w-full h-full object-cover rounded-full"
+                                    />
+                                ):(
+                                    <User className="w-10 h-10 text-gray-400" />
+                                )}
                             </div>
                             <label
-                                className="absolute -bottom-0 -right-0 bg-[#1D63ED] hover:bg-[#1952C6] text-white p-1 rounded-full cursor-pointer">
+                                className="absolute -bottom-0 -right-0 bg-[#5F8B4C] hover:bg-[#3D8D7A] text-white p-1 rounded-full cursor-pointer">
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                           d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                 </svg>
-                                <input type="file" className="hidden" accept="image/*" />
+                                <input
+                                    type="file"
+                                    accept="image/jpeg, image/png, image/gif"
+                                    onChange={handleAvatarChange}
+                                    className="hidden"
+                                />
                             </label>
                         </div>
+                        {errors.avatar && (
+                            <p className="text-red-500 text-sm mt-2">{errors.avatar}</p>
+                        )}
                     </div>
 
                     <div ref={refs.fullName} className="flex-1">
@@ -138,10 +192,10 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
                         className={`grid grid-cols-1 md:grid-cols-2 gap-4 ${errors.role ? 'border-red-500' : ''}`}>
                         <button
                             type="button"
-                            className={`p-6 rounded-lg border-2 flex flex-col items-center ${
+                            className={`cursor-pointer p-6 rounded-lg border-2 flex flex-col items-center ${
                                 userData.role === 'learner'
-                                    ? 'bg-[#E5F2FC] border-[#1D63ED]'
-                                    : 'bg-white border-gray-300 hover:border-[#1D63ED]'
+                                    ? 'bg-[#C1D8C3] border-[#3D8D7A]'
+                                    : 'bg-white border-gray-300 hover:border-[#3D8D7A]'
                             }`}
                             onClick={() => updateUserData({ role: 'learner', accountStatus: 1 })}
                         >
@@ -152,10 +206,10 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
 
                         <button
                             type="button"
-                            className={`p-6 rounded-lg border-2 flex flex-col items-center ${
+                            className={`cursor-pointer p-6 rounded-lg border-2 flex flex-col items-center ${
                                 userData.role === 'mentor'
-                                    ? 'bg-[#E5F2FC] border-[#1D63ED]'
-                                    : 'bg-white border-gray-300 hover:border-[#1D63ED]'
+                                    ? 'bg-[#C1D8C3] border-[#3D8D7A]'
+                                    : 'bg-white border-gray-300 hover:border-[#3D8D7A]'
                             }`}
                             onClick={() => updateUserData({ role: 'mentor', accountStatus: 0 })}
                         >
@@ -218,10 +272,9 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
                                 value={userData.industryExperience || ''}  // Convert null to empty string
                                 onChange={(value) => updateUserData({ industryExperience: value })}
                                 clearError={() => clearError('industryExperience')}
-                                placeholder="e.g. 5 years in Tech, 3 years in Finance"
+                                placeholder="e.g. 5 years in Tech"
                                 error={errors.industryExperience}
                             />
-
                         </div>
                     </div>
                 )}
@@ -243,10 +296,10 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                         <button
                             type="button"
-                            className={`p-4 rounded-lg border-2 flex items-center justify-center gap-2 ${
+                            className={`cursor-pointer p-4 rounded-lg border-2 flex items-center justify-center gap-2 ${
                                 userData.communicationMethod === 'video'
-                                    ? 'bg-[#E5F2FC] border-[#1D63ED]'
-                                    : 'bg-white border-gray-300 hover:border-[#1D63ED]'
+                                    ? 'bg-[#C1D8C3] border-[#3D8D7A] text-gray-700'
+                                    : 'bg-white border-gray-300 hover:border-[#3D8D7A] text-gray-700'
                             }`}
                             onClick={() => updateUserData({ communicationMethod: 'video' })}
                         >
@@ -256,10 +309,10 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
 
                         <button
                             type="button"
-                            className={`p-4 rounded-lg border-2 flex items-center justify-center gap-2 ${
+                            className={`p-4 cursor-pointer rounded-lg border-2 flex items-center justify-center gap-2 ${
                                 userData.communicationMethod === 'audio'
-                                    ? 'bg-[#E5F2FC] border-[#1D63ED]'
-                                    : 'bg-white border-gray-300 hover:border-[#1D63ED]'
+                                    ? 'bg-[#C1D8C3] border-[#3D8D7A] text-gray-700'
+                                    : 'bg-white border-gray-300 hover:border-[#3D8D7A] text-gray-700'
                             }`}
                             onClick={() => updateUserData({ communicationMethod: 'audio' })}
                         >
@@ -269,10 +322,10 @@ const CompleteProfile: React.FC<CompleteProfileProps> = (
 
                         <button
                             type="button"
-                            className={`p-4 rounded-lg border-2 flex items-center justify-center gap-2 ${
+                            className={`p-4 cursor-pointer rounded-lg border-2 flex items-center justify-center gap-2 ${
                                 userData.communicationMethod === 'text'
-                                    ? 'bg-[#E5F2FC] border-[#1D63ED]'
-                                    : 'bg-white border-gray-300 hover:border-[#1D63ED]'
+                                    ? 'bg-[#C1D8C3] border-[#3D8D7A] text-gray-700'
+                                    : 'bg-white border-gray-300 hover:border-[#3D8D7A] text-gray-700'
                             }`}
                             onClick={() => updateUserData({ communicationMethod: 'text' })}
                         >

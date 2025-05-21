@@ -48,8 +48,6 @@ export const validateProfile = (userData: UserData) => {
             errors.professionalSkills = 'Professional skills must be at least 3 characters';
         } else if (profSkillsTrim.length > 300) {
             errors.professionalSkills = 'Too many characters in professional skills';
-        } else if (!/^[A-Za-z0-9,.\s#-]+$/.test(profSkillsTrim)) {
-            errors.professionalSkills = 'Skills format is not valid';
         }
     }
 
@@ -60,8 +58,6 @@ export const validateProfile = (userData: UserData) => {
             errors.industryExperience = 'Industry experience must be at least 3 characters';
         } else if (industryTrim.length > 200) {
             errors.industryExperience = 'Industry experience must not exceed 200 characters';
-        } else if (!/^[A-Za-z0-9,.\s-]+$/.test(industryTrim)) {
-            errors.industryExperience = 'Invalid input for industry experience';
         }
     }
 

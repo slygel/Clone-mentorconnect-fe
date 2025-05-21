@@ -22,7 +22,7 @@ export const NavigationButtonGroup: React.FC<NavigationButtonGroupProps> = (
         <button
             type="submit"
             onClick={onSubmit}
-            className={`cursor-pointer flex-1 py-4 bg-[#1D63ED] hover:bg-[#1952C6] text-white font-semibold rounded-lg transition duration-200 ${
+            className={`cursor-pointer flex-1 py-4 bg-[#5F8B4C] hover:bg-[#658147] text-white font-semibold rounded-lg transition duration-200 ${
                 submitDisabled ? 'opacity-50 cursor-not-allowed' : ''
             }`}
             disabled={submitDisabled}

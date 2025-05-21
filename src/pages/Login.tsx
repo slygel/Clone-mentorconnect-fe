@@ -8,7 +8,7 @@ import {toast} from "react-toastify";
 
 const Login = () => {
     const navigate = useNavigate();
-    const {authAxios} = useAuth();
+    const { authAxios, verifyAuth } = useAuth();
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -71,6 +71,7 @@ const Login = () => {
                     email: formData.email,
                     password: formData.password
                 });
+                await verifyAuth();
                 // Handle successful login
                 toast.success("Login successfully");
                 navigate("/");
@@ -100,8 +101,8 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#EFEEEA] flex items-center justify-center p-4">
-            <div className="p-8 w-full max-w-2xl bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div className="min-h-screen bg-[#ECFAE5] flex items-center justify-center p-4">
+                <div className="p-8 w-full max-w-2xl bg-white rounded-2xl shadow-xl overflow-hidden">
                 <div className="flex justify-between items-center mb-8">
                     <h1 className="text-2xl font-bold text-[#000000]">Sign In Your Account</h1>
                 </div>
@@ -135,7 +136,7 @@ const Login = () => {
                     <div className="flex items-center justify-end">
                         <Link
                             to="/forgot-password"
-                            className="text-[#1D63ED] hover:underline text-sm"
+                            className="text-[#1B4D3E] hover:underline text-sm"
                         >
                             Forgot password?
                         </Link>
@@ -144,7 +145,7 @@ const Login = () => {
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className={`cursor-pointer w-full py-4 bg-[#1D63ED] hover:bg-[#1952C6] text-white font-semibold rounded-lg transition duration-200 ${
+                        className={`cursor-pointer w-full py-4 bg-[#5F8B4C] hover:bg-[#658147] text-white font-semibold rounded-lg transition duration-200 ${
                             isSubmitting ? "opacity-70 cursor-not-allowed" : ""
                         }`}
                     >
@@ -155,7 +156,7 @@ const Login = () => {
                 <div className="mt-6 text-center">
                     <p className="text-gray-700">
                         Don't have an account?{" "}
-                        <Link to="/register" className="text-[#1D63ED] hover:underline">
+                        <Link to="/register" className="text-[#1B4D3E] hover:underline font-semibold">
                             Sign up
                         </Link>
                     </p>

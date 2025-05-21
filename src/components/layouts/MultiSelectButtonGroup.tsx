@@ -12,13 +12,8 @@ type MultiSelectButtonGroupProps = {
 };
 
 export const MultiSelectButtonGroup: React.FC<MultiSelectButtonGroupProps> = ({
-                                                                                  options,
-                                                                                  selected,
-                                                                                  onToggle,
-                                                                                  label,
-                                                                                  error,
-                                                                                  gridCols = 'grid grid-cols-2 md:grid-cols-4 gap-3',
-                                                                              }) => (
+    options, selected, onToggle, label, error, gridCols = 'grid grid-cols-2 md:grid-cols-4 gap-3',
+  }) => (
     <div className="mb-8">
         <label className="block text-gray-700 mb-2">{label}</label>
         <div className={gridCols}>
@@ -26,10 +21,10 @@ export const MultiSelectButtonGroup: React.FC<MultiSelectButtonGroupProps> = ({
                 <button
                     key={option}
                     type="button"
-                    className={`p-3 rounded-lg border ${
+                    className={`cursor-pointer p-3 rounded-lg border ${
                         selected.includes(option)
-                            ? 'bg-[#E5F2FC] border-[#1D63ED] text-[#1D63ED]'
-                            : 'bg-white border-gray-300 text-gray-700 hover:border-[#1D63ED]'
+                            ? 'bg-[#C1D8C3] border-[#3D8D7A] hover:bg-[#C1D8C3]'
+                            : 'bg-white border-gray-300 text-gray-700 hover:border-[#537D5D]'
                     } ${gridCols.includes('flex') ? 'px-6 py-3 text-sm' : ''}`}
                     onClick={() => onToggle(option)}
                 >
@@ -38,6 +33,5 @@ export const MultiSelectButtonGroup: React.FC<MultiSelectButtonGroupProps> = ({
             ))}
         </div>
         {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
-
     </div>
 );

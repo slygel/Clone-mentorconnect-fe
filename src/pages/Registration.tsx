@@ -17,13 +17,13 @@ const initialUserData: UserData = {
     agreeToTerms: false,
     fullName: '',
     role: 'learner',
-    bio: '',  // Use empty string instead of null
+    bio: '',
     areasOfExpertise: [],
-    professionalSkills: '',  // Use empty string instead of null
-    industryExperience: '',  // Use empty string instead of null
+    professionalSkills: '',
+    industryExperience: '',
     availability: [],
     communicationMethod: 'video',
-    learningObjectives: '',  // Use empty string instead of null
+    learningObjectives: '',
     interestedTopics: [],
     sessionFrequency: 'Weekly',
     sessionDuration: '1 hour',
@@ -31,8 +31,9 @@ const initialUserData: UserData = {
     privateProfile: false,
     allowMessages: true,
     receiveNotifications: true,
-    accountStatus: 1 , // 1 for active for learner
-    teachingApproaches: []
+    accountStatus: 1,
+    teachingApproaches: [],
+    avatarFile: undefined,
 };
 
 const Registration = () => {
@@ -73,6 +74,7 @@ const Registration = () => {
     };
 
     const nextStep = () => {
+        console.log("Moving to next step", userData.avatarFile);
         setCurrentStep(prev => Math.min(prev + 1, 3));
     };
 
@@ -119,7 +121,7 @@ const Registration = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#E5F2FC] flex items-center justify-center p-4">
+        <div className="min-h-screen bg-[#ECFAE5] flex items-center justify-center p-4">
             <div className="w-full max-w-2xl bg-white rounded-2xl shadow-xl overflow-hidden">
                 {currentStep === 1 && (
                     <CreateAccount

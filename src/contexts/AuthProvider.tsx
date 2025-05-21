@@ -1,12 +1,20 @@
-// src/contexts/AuthProvider.tsx
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { useNavigate } from "react-router-dom";
-import type {AxiosInstance} from "axios";
+import type { AxiosInstance } from "axios";
 import axiosInstance from "../utils/axiosInstance.ts";
 
 interface User {
   id: string;
   email: string;
+  fullName: string;
+  role: string;
 }
 
 interface AuthContextType {
@@ -15,6 +23,7 @@ interface AuthContextType {
   updateUser: (userData: User | null) => void;
   logout: (message?: string) => Promise<void>;
   authAxios: AxiosInstance;
+  verifyAuth: () => Promise<void>;
 }
 
 interface AuthProviderProps {
@@ -34,7 +43,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const handleLogout = async (message: string = "You have been logged out") => {
     try {
-      await authAxios.post("/Auth/Logout");
+      await authAxios.post("/auth/logout");
     } finally {
       setUser(null);
       displayToast(message);
@@ -46,8 +55,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const verifyAuth = async () => {
     try {
-      const response = await authAxios.get<User>("/Auth/GetCurrentUser");
+      const response = await authAxios.get<User>("/auth/current-user");
       setUser(response.data);
+      console.log("User data:", response.data);
     } catch {
       setUser(null);
     } finally {
@@ -59,22 +69,28 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setUser(userData);
   };
 
+  const hasCalledRef = useRef(false);
+
   useEffect(() => {
-    verifyAuth();
-  }, []);
+    if (!hasCalledRef.current) {
+      hasCalledRef.current = true;
+      verifyAuth();
+    }
+  }, [verifyAuth]);
 
   return (
-      <AuthContext.Provider
-          value={{
-            user,
-            loading,
-            updateUser,
-            logout: handleLogout,
-            authAxios,
-          }}
-      >
-        {children}
-      </AuthContext.Provider>
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        updateUser,
+        logout: handleLogout,
+        authAxios,
+        verifyAuth,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
   );
 };
 

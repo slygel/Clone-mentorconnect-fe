@@ -3,17 +3,13 @@ import type {CreateAccountProps} from "../interfaces/CreateAccountProps.ts";
 import {InputField} from "./layouts/InputField.tsx";
 import {CheckboxField} from "./layouts/CheckboxField.tsx";
 import {Link} from "react-router-dom";
-import {getEmailExisted} from "../services/AuthService.ts";
-import {useAuth} from "../contexts/AuthProvider.tsx";
 
-const CreateAccount: React.FC<CreateAccountProps> = ({userData,
-                                                     updateUserData,
-                                                     nextStep,
-                                                     }) => {
+const CreateAccount: React.FC<CreateAccountProps> = ({
+        userData, updateUserData, nextStep,
+ }) => {
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const {authAxios} = useAuth();
 
     const validate = async () => {
         const newErrors: Record<string, string> = {};
@@ -24,16 +20,6 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
             newErrors.email = 'Please enter in your email';
         }else if (!emailRegex.test(userData.email.trim())) {
             newErrors.email = "Please enter a valid email";
-        }else{
-            try {
-                const emailExists = await getEmailExisted(authAxios, userData.email.trim());
-                if (emailExists) {
-                    newErrors.email = "This email is already registered";
-                }
-            } catch (error) {
-                console.error("Error checking email existence:", error);
-                newErrors.email = "An error occurred while checking the email. Please try again";
-            }
         }
 
         if(userData.email.length > 254){
@@ -96,14 +82,16 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
                     Create Your Account
                 </h1>
                 <div className="text-right">
-                    <span className="text-[#1D63ED] font-bold">Step 1</span>
+                    <span className="text-[#1B4D3E] font-bold">Step 1</span>
                     <span className="text-gray-600"> of 3</span>
                 </div>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
+                <label className="block mb-2">
+                    Email address <span className="text-red-500">*</span>
+                </label>
                 <InputField
-                    label="Email address"
                     id="email"
                     type="text"
                     value={userData.email}
@@ -113,8 +101,10 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
                     clearError={() => clearError('email')}
                 />
 
+                <label className="block mb-2">
+                    Password <span className="text-red-500">*</span>
+                </label>
                 <InputField
-                    label="Password"
                     id="password"
                     type="password"
                     value={userData.password}
@@ -127,8 +117,10 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
                     placeholder={"Enter your password"}
                 />
 
+                <label className="block mb-2">
+                    Confirm Password <span className="text-red-500">*</span>
+                </label>
                 <InputField
-                    label="Confirm Password"
                     id="confirmPassword"
                     type="password"
                     value={userData.confirmPassword}
@@ -145,11 +137,11 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
                     label={
                         <>
                             I agree to the{" "}
-                            <a href="#" className="text-[#1D63ED] hover:underline">
+                            <a href="#" className="text-[#1B4D3E] hover:underline font-semibold">
                                 Terms of Service
                             </a>{" "}
                             and
-                            <a href="#" className="text-[#1D63ED] hover:underline">
+                            <a href="#" className="text-[#1B4D3E] hover:underline font-semibold">
                                 {" "}
                                 Privacy Policy
                             </a>
@@ -163,7 +155,7 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
 
                 <button
                     type="submit"
-                    className={`w-full py-4 bg-[#1D63ED] hover:bg-[#1952C6] text-white font-semibold rounded-lg transition duration-200 ${
+                    className={`w-full py-4 bg-[#5F8B4C] hover:bg-[#658147] text-white font-semibold rounded-lg transition duration-200 ${
                         userData.agreeToTerms
                             ? "cursor-pointer"
                             : "cursor-not-allowed opacity-50"
@@ -177,7 +169,7 @@ const CreateAccount: React.FC<CreateAccountProps> = ({userData,
             <div className="mt-6 text-center">
                 <p className="text-gray-700">
                     Already have an account?{" "}
-                    <Link to="/login" className="text-[#1D63ED] hover:underline">
+                    <Link to="/login" className="text-[#1B4D3E] hover:underline font-semibold">
                         Sign in
                     </Link>
                 </p>

@@ -1,13 +1,13 @@
 import { Eye, EyeOff } from "lucide-react";
 
 type InputFieldProps = {
-  label: string;
+  label?: string;
   id: string;
   type: string;
   value: string;
   onChange: (value: string) => void;
   error?: string;
-  clearError: (id: string) => void;
+  clearError?: (id: string) => void;
   required?: boolean;
   showToggle?: boolean;
   showPassword?: boolean;
@@ -39,13 +39,13 @@ export const InputField: React.FC<InputFieldProps> = ({
       <input
         type={showToggle && showPassword ? "text" : type}
         id={id}
-        className={`pr-9 pl-3 w-full p-3 border ${
+        className={`pr-7 pl-3 w-full p-3 border ${
           error ? "border-red-500" : "border-gray-300"
-        } rounded-lg bg-white text-black text-md focus:outline-none hover:border-[#1D63ED]`}
+        } rounded-lg bg-white text-black text-md focus:outline-none hover:border-[#537D5D]`}
         value={value}
         onChange={(e) => {
           onChange(e.target.value);
-          clearError(id);
+          if (clearError) clearError(id);
         }}
         required={required}
         placeholder={placeholder}
@@ -54,7 +54,7 @@ export const InputField: React.FC<InputFieldProps> = ({
         <button
           type="button"
           onClick={toggleVisibility}
-          className="absolute inset-y-0 right-0 pr-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+          className="absolute inset-y-0 right-0 pr-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
         >
           {showPassword ? (
             <Eye className="cursor-pointer h-5 w-5" />

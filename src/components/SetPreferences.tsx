@@ -32,7 +32,7 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
             <div className="mb-8 flex justify-between">
                 <h1 className="text-3xl font-bold text-gray-800">Set Your Preferences</h1>
                 <div className="text-right">
-                    <span className="text-[#1D63ED] font-bold">Step 3</span>
+                    <span className="text-[#1B4D3E] font-bold">Step 3</span>
                     <span className="text-gray-600"> of 3</span>
                 </div>
             </div>
@@ -50,10 +50,10 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
                                 <button
                                     key={topic}
                                     type="button"
-                                    className={`p-3 rounded-lg border ${
+                                    className={`p-3 rounded-lg border cursor-pointer ${
                                         userData.interestedTopics?.includes(topic)
-                                            ? 'bg-[#E5F2FC] border-[#1D63ED] text-[#1D63ED]'
-                                            : 'bg-white border-gray-300 text-gray-700 hover:border-[#1D63ED]'
+                                            ? 'bg-[#C1D8C3] border-[#3D8D7A]'
+                                            : 'bg-white border-gray-300 hover:border-[#3D8D7A]'
                                     }`}
                                     onClick={() => toggleTopic(topic)}
                                 >
@@ -70,14 +70,14 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
                         <div className="relative">
                             <select
                                 id="sessionFrequency"
-                                className="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-800 appearance-none"
+                                className="w-full p-3 cursor-pointer border text-gray-700 border-gray-300 border-gray-300 hover:border-[#3D8D7A]
+                                border-gray-300 rounded-lg bg-white text-gray-800 appearance-none"
                                 value={userData.sessionFrequency}
                                 onChange={(e) => updateUserData({sessionFrequency: e.target.value})}
                             >
                                 <option value="Weekly">Weekly</option>
                                 <option value="Bi-weekly">Bi-weekly</option>
                                 <option value="Monthly">Monthly</option>
-                                <option value="As needed">As needed</option>
                             </select>
                             <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                 <ChevronDown className="h-5 w-5 text-gray-400"/>
@@ -86,12 +86,12 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
                     </div>
 
                     <div>
-                        <label htmlFor="sessionDuration" className="block text-gray-700 mb-2">Preferred session
-                            duration</label>
+                        <label htmlFor="sessionDuration" className="block text-gray-700 mb-2">Preferred session duration</label>
                         <div className="relative">
                             <select
                                 id="sessionDuration"
-                                className="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-800 appearance-none"
+                                className="w-full cursor-pointer p-3 border border-gray-300 rounded-lg text-gray-700 border-gray-300 border-gray-300 hover:border-[#3D8D7A]
+                                bg-white text-gray-800 appearance-none"
                                 value={userData.sessionDuration}
                                 onChange={(e) => updateUserData({sessionDuration: e.target.value})}
                             >
@@ -116,10 +116,10 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
                                 <button
                                     key={style}
                                     type="button"
-                                    className={`p-3 rounded-lg ${
+                                    className={`p-3 rounded-lg cursor-pointer ${
                                         userData.learningStyle === style.toLowerCase()
-                                            ? 'bg-[#1D63ED] text-white'
-                                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                            ? 'bg-[#C1D8C3] border-[#3D8D7A]'
+                                            : 'bg-gray-200 border-gray-300 hover:border-[#3D8D7A]'
                                     }`}
                                     onClick={() => updateUserData({learningStyle: style.toLowerCase()})}
                                 >
@@ -132,17 +132,16 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
 
                 {isMentor && (
                     <div className="mb-8">
-                        <label className="block text-gray-700 mb-2">Your teaching approach (select all that
-                            apply)</label>
+                        <label className="block text-gray-700 mb-2">Your teaching approach (select all that apply)</label>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <button
                                 type="button"
-                                className={`p-4 rounded-lg border-2 flex items-center gap-3 ${
-                                    userData.teachingApproaches?.includes("hands-on")
-                                        ? "bg-[#E5F2FC] border-[#1D63ED] text-[#1D63ED]"
-                                        : "bg-white border-gray-300 text-gray-700 hover:border-[#1D63ED]"
+                                className={`p-4 cursor-pointer rounded-lg border-2 flex items-center gap-3 ${
+                                    userData.teachingApproaches?.includes("Hands-on Practice")
+                                        ? "bg-[#C1D8C3] border-[#3D8D7A]"
+                                        : "bg-white text-gray-700 border-gray-300 border-gray-300 hover:border-[#3D8D7A]"
                                 }`}
-                                onClick={() => toggleTeachingApproach("hands-on")}
+                                onClick={() => toggleTeachingApproach("Hands-on Practice")}
                             >
                                 <Wrench className="h-5 w-5"/>
                                 <span>Hands-on Practice</span>
@@ -150,12 +149,12 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
 
                             <button
                                 type="button"
-                                className={`p-4 rounded-lg border-2 flex items-center gap-3 ${
-                                    userData.teachingApproaches?.includes("discussion")
-                                        ? "bg-[#E5F2FC] border-[#1D63ED] text-[#1D63ED]"
-                                        : "bg-white border-gray-300 text-gray-700 hover:border-[#1D63ED]"
+                                className={`p-4 cursor-pointer rounded-lg border-2 flex items-center gap-3 ${
+                                    userData.teachingApproaches?.includes("Discussion Based")
+                                        ? "bg-[#C1D8C3] border-[#3D8D7A]"
+                                        : "bg-white text-gray-700 border-gray-300 border-gray-300 hover:border-[#3D8D7A]"
                                 }`}
-                                onClick={() => toggleTeachingApproach("discussion")}
+                                onClick={() => toggleTeachingApproach("Discussion Based")}
                             >
                                 <MessageSquare className="h-5 w-5"/>
                                 <span>Discussion Based</span>
@@ -163,12 +162,12 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
 
                             <button
                                 type="button"
-                                className={`p-4 rounded-lg border-2 flex items-center gap-3 ${
-                                    userData.teachingApproaches?.includes("project")
-                                        ? "bg-[#E5F2FC] border-[#1D63ED] text-[#1D63ED]"
-                                        : "bg-white border-gray-300 text-gray-700 hover:border-[#1D63ED]"
+                                className={`p-4 cursor-pointer rounded-lg border-2 flex items-center gap-3 ${
+                                    userData.teachingApproaches?.includes("Project Based")
+                                        ? "bg-[#C1D8C3] border-[#3D8D7A]"
+                                        : "bg-white text-gray-700 border-gray-300 border-gray-300 hover:border-[#3D8D7A]"
                                 }`}
-                                onClick={() => toggleTeachingApproach("project")}
+                                onClick={() => toggleTeachingApproach("Project Based")}
                             >
                                 <BarChart3 className="h-5 w-5"/>
                                 <span>Project Based</span>
@@ -176,12 +175,12 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
 
                             <button
                                 type="button"
-                                className={`p-4 rounded-lg border-2 flex items-center gap-3 ${
-                                    userData.teachingApproaches?.includes("lecture")
-                                        ? "bg-[#E5F2FC] border-[#1D63ED] text-[#1D63ED]"
-                                        : "bg-white border-gray-300 text-gray-700 hover:border-[#1D63ED]"
+                                className={`p-4 cursor-pointer rounded-lg border-2 flex items-center gap-3 ${
+                                    userData.teachingApproaches?.includes("Lecture Style")
+                                        ? "bg-[#C1D8C3] border-[#3D8D7A]"
+                                        : "bg-white text-gray-700 border-gray-300 border-gray-300 hover:border-[#3D8D7A]"
                                 }`}
-                                onClick={() => toggleTeachingApproach("lecture")}
+                                onClick={() => toggleTeachingApproach("Lecture Style")}
                             >
                                 <FileText className="h-5 w-5"/>
                                 <span>Lecture Style</span>
@@ -197,11 +196,11 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
                         <label className="flex items-start">
                             <input
                                 type="checkbox"
-                                className="mt-1 h-5 w-5 text-[#1D63ED] rounded"
+                                className="mt-1 h-5 w-5 text-orange-500 rounded cursor-pointer"
                                 checked={userData.privateProfile}
                                 onChange={(e) => updateUserData({privateProfile: e.target.checked})}
                             />
-                            <div className="ml-2">
+                            <div className="ml-2 cursor-pointer">
                                 <div className="text-gray-700 font-medium">Private profile</div>
                                 <div className="text-gray-500 text-sm">Only approved connections can view your full
                                     profile details
@@ -212,7 +211,7 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
                         <label className="flex items-start">
                             <input
                                 type="checkbox"
-                                className="mt-1 h-5 w-5 text-[#1D63ED] rounded"
+                                className="mt-1 h-5 w-5 text-orange-500 rounded cursor-pointer"
                                 checked={userData.allowMessages}
                                 onChange={(e) => updateUserData({allowMessages: e.target.checked})}
                             />
@@ -224,14 +223,14 @@ const SetPreferences: React.FC<SetPreferencesProps> = (
                             </div>
                         </label>
 
-                        <label className="flex items-start">
+                        <label className="flex items-start ">
                             <input
                                 type="checkbox"
-                                className="mt-1 h-5 w-5 text-[#1D63ED] rounded"
+                                className="mt-1 h-5 w-5 text-orange-500 rounded cursor-pointer"
                                 checked={userData.receiveNotifications}
                                 onChange={(e) => updateUserData({receiveNotifications: e.target.checked})}
                             />
-                            <div className="ml-2">
+                            <div className="ml-2 cursor-pointer">
                                 <div className="text-gray-700 font-medium">Receive notifications</div>
                                 <div className="text-gray-500 text-sm">
                                     Get email and in-app notifications for messages, session requests, and updates

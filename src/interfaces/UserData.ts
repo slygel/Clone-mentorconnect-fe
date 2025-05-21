@@ -21,6 +21,7 @@ export interface UserData {
     receiveNotifications: boolean;
     accountStatus: number;
     teachingApproaches: string[];
+    avatarFile?: File;
 }
 
 export interface UserDataToApi {
@@ -29,7 +30,6 @@ export interface UserDataToApi {
     role: number;
     userDetailsToAddDTO: {
         bio: string | null;
-        imageUrl: string;
         skills: string | null;
         experience: string | null;
         prefferedComm: number;
@@ -46,9 +46,9 @@ export interface UserDataToApi {
         accountStatus: number;
         fullName: string;
         teachingApproaches: string;
+        avatarFile?: File;
     };
 }
-
 
 export const convertUserDataToApiFormat = (userData: UserData): UserDataToApi => {
     // Convert role to number
@@ -83,7 +83,6 @@ export const convertUserDataToApiFormat = (userData: UserData): UserDataToApi =>
         role: roleNumber,
         userDetailsToAddDTO: {
             bio: userData.bio === '' ? null : userData.bio,
-            imageUrl: '', // Default empty as it's handled separately
             skills: userData.professionalSkills === '' ? null : userData.professionalSkills,
             experience: userData.industryExperience === '' ? null : userData.industryExperience,
             prefferedComm: commMethod,
@@ -99,7 +98,8 @@ export const convertUserDataToApiFormat = (userData: UserData): UserDataToApi =>
             notiAllowed: userData.receiveNotifications,
             accountStatus: userData.accountStatus,
             fullName: userData.fullName,
-            teachingApproaches: userData.teachingApproaches.join(';')
+            teachingApproaches: userData.teachingApproaches.join(';'),
+            avatarFile: userData.avatarFile, // Include the file if it exists
         }
     };
 };
